@@ -1,0 +1,52 @@
+class Solution {
+
+    public int shipWithinDays(int[] weights, int days) {
+
+        int left = Integer.MIN_VALUE;
+        int right = 0;
+
+        // Find minimum and maximum possible capacity
+        for (int weight : weights) {
+            left = Math.max(left, weight);
+            right += weight;
+        }
+
+        // Binary search for minimum capacity
+        while (left < right) {
+
+            int mid = left + (right - left) / 2;
+
+            int requiredDays = calculateDays(weights, mid);
+
+            if (requiredDays <= days) {
+                // Capacity is sufficient
+                // Try a smaller capacity
+                right = mid;
+            } else {
+                // Capacity is not sufficient
+                // Increase the capacity
+                left = mid + 1;
+            }
+        }
+
+        return left;
+    }
+
+    private int calculateDays(int[] weights, int capacity) {
+
+        int currentLoad = 0;
+        int daysRequired = 1;
+
+        for (int weight : weights) {
+
+            if (currentLoad + weight > capacity) {
+                daysRequired++;
+                currentLoad = weight;
+            } else {
+                currentLoad += weight;
+            }
+        }
+
+        return daysRequired;
+    }
+}
