@@ -1,0 +1,24 @@
+class Solution {
+    public int maxDepth(String s) {
+
+        int high = 0;
+        int lvl = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+
+            if (s.charAt(i) == '(') {
+                lvl++;
+
+                if (lvl > high) {
+                    high = lvl;
+                }
+            }
+
+            else if (s.charAt(i) == ')') {
+                lvl--;
+            }
+        }
+
+        return high;
+    }
+}
