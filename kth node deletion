@@ -1,0 +1,32 @@
+class Solution {
+    public ListNode deleteKthNode(ListNode head, int k) {
+        if (head == null) {
+            return null;
+        }
+
+        // If k = 1, delete the head node
+        if (k == 1) {
+            return head.next;
+        }
+
+        ListNode temp = head;
+
+        // Move to the (k-1)th node
+        for (int i = 1; i < k - 1; i++) {
+            if (temp.next == null) {
+                return head;
+            }
+            temp = temp.next;
+        }
+
+        // If kth node does not exist, do nothing
+        if (temp.next == null) {
+            return head;
+        }
+
+        // Delete the kth node
+        temp.next = temp.next.next;
+
+        return head;
+    }
+}
