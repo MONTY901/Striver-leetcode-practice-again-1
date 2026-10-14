@@ -1,0 +1,23 @@
+import java.util.*;
+
+class Solution {
+    public ListNode arrayToDoublyLinkedList(List<Integer> list) {
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        ListNode head = new ListNode(list.get(0));
+        ListNode prev = head;
+
+        for (int i = 1; i < list.size(); i++) {
+            ListNode curr = new ListNode(list.get(i));
+
+            prev.next = curr;
+            curr.prev = prev;
+
+            prev = curr;
+        }
+
+        return head;
+    }
+}
