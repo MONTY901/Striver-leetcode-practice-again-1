@@ -1,0 +1,57 @@
+/*
+// Definition for a Node.
+class ListNode {
+    public int data;
+    public ListNode prev;
+    public ListNode next;
+    public ListNode();
+    public ListNode(int data);
+    public ListNode(int data, ListNode prev, ListNode next);
+};
+*/
+
+
+class Solution {
+    public ListNode deleteKthElement(ListNode head, int k) {
+        if (head == null || k <= 0) {
+            return head;
+        }
+
+        ListNode temp = head;
+        int count = 1;
+
+        // Reach the kth node
+        while (temp != null && count < k) {
+            temp = temp.next;
+            count++;
+        }
+
+        // k is greater than the list length
+        if (temp == null) {
+            return head;
+        }
+
+        // If the kth node is the head
+        if (temp.prev == null) {
+            head = temp.next;
+
+            if (head != null) {
+                head.prev = null;
+            }
+
+            return head;
+        }
+
+        // Connect the previous node to the next node
+        ListNode prev = temp.prev;
+        ListNode next = temp.next;
+
+        prev.next = next;
+
+        if (next != null) {
+            next.prev = prev;
+        }
+
+        return head;
+    }
+}
