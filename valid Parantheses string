@@ -1,0 +1,29 @@
+class Solution {
+    public boolean checkValidString(String s) {
+        int min = 0, max = 0;
+
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                min++;
+                max++;
+            } else if (c == ')') {
+                min--;
+                max--;
+            } else { // '*' can be ')', '', or '('
+                min--;
+                max++;
+            }
+
+            // No valid path remains
+            if (max < 0) {
+                return false;
+            }
+
+            // Clip negative balances to 0
+            min = Math.max(min, 0);
+        }
+
+        // At least one valid path ends with balance 0
+        return min == 0;
+    }
+}
