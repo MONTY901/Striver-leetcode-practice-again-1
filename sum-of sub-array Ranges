@@ -1,0 +1,43 @@
+
+class Solution {
+    public long subArrayRanges(int[] A) {
+        int n = A.length;
+        long res = 0;
+
+        Stack<Integer> s = new Stack<>();
+
+        // Sum of subarray minimums
+        for (int i = 0; i <= n; i++) {
+
+            while (!s.isEmpty() &&
+                   (i == n || A[s.peek()] >= A[i])) {
+
+                int j = s.pop();
+                int k = s.isEmpty() ? -1 : s.peek();
+
+                res -= (long) A[j] * (i - j) * (j - k);
+            }
+
+            if (i < n) s.push(i);
+        }
+
+        s.clear();
+
+        // Sum of subarray maximums
+        for (int i = 0; i <= n; i++) {
+
+            while (!s.isEmpty() &&
+                   (i == n || A[s.peek()] <= A[i])) {
+
+                int j = s.pop();
+                int k = s.isEmpty() ? -1 : s.peek();
+
+                res += (long) A[j] * (i - j) * (j - k);
+            }
+
+            if (i < n) s.push(i);
+        }
+
+        return res;
+    }
+}
