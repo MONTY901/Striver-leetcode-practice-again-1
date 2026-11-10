@@ -1,0 +1,48 @@
+class Solution {
+    public ArrayList<Integer> topView(Node root) {
+
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        if (root == null) return ans;
+
+        Queue<Node> q = new LinkedList<>();
+        Queue<Integer> hd = new LinkedList<>();
+
+        Map<Integer, Integer> mp = new HashMap<>();
+
+        q.add(root);
+        hd.add(0);
+
+        int minHd = 0;
+        int maxHd = 0;
+
+        while (!q.isEmpty()) {
+
+            Node node = q.poll();
+            int currHd = hd.poll();
+
+            minHd = Math.min(minHd, currHd);
+            maxHd = Math.max(maxHd, currHd);
+
+            if (!mp.containsKey(currHd)) {
+                mp.put(currHd, node.data);
+            }
+
+            if (node.left != null) {
+                q.add(node.left);
+                hd.add(currHd - 1);
+            }
+
+            if (node.right != null) {
+                q.add(node.right);
+                hd.add(currHd + 1);
+            }
+        }
+
+        for (int i = minHd; i <= maxHd; i++) {
+            ans.add(mp.get(i));
+        }
+
+        return ans;
+    }
+}
